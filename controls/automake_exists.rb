@@ -16,9 +16,15 @@ control 'core-plans-automake-exists' do
     its('stderr') { should be_empty }
   end
 
-  command_relative_path = input('command_relative_path', value: 'bin/automake')
-  command_full_path = File.join(plan_installation_directory.stdout.strip, "#{command_relative_path}")
-  describe file(command_full_path) do
+  automake_full_path = File.join(plan_installation_directory.stdout.strip, "bin/automake")
+  describe file(automake_full_path) do
     it { should exist }
+    it { should be_executable }
+  end
+
+  aclocal_full_path = File.join(plan_installation_directory.stdout.strip, "bin/aclocal")
+  describe file(aclocal_full_path) do
+    it { should exist }
+    it { should be_executable }
   end
 end
